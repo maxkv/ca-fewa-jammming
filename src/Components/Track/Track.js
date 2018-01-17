@@ -5,6 +5,7 @@ export class Track extends React.Component {
   constructor(props) {
     super(props);
     this.handleClickAdd = this.handleClickAdd.bind(this);
+    this.handleClickRemove = this.handleClickRemove.bind(this);
   }
 
   renderAction(isRemoval) {

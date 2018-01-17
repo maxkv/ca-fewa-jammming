@@ -24,6 +24,8 @@ export class App extends React.Component {
 
     }
     this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
 
   addTrack(newTrack) {
@@ -40,6 +42,25 @@ export class App extends React.Component {
     this.setState(currentState);
   }
 
+  removeTrack(minusTrack) {
+    let songExists = false;
+    let currentState = this.state;
+    currentState.playlist.songs.forEach(songTrack => {
+      if(songTrack.id === minusTrack.id && songExists ===false) {
+        songExists = true;
+      }
+    });
+    if (songExists) {
+      currentState.playlist.songs.pop({id: minusTrack.id, name: minusTrack.name, artist: minusTrack.artist, album: minusTrack.album})
+    }
+    this.setState(currentState);
+  }
+
+  updatePlaylistName(name) {
+    let currentState = this.state;
+    currentState.playlist.name = name;
+    this.setState(currentState);
+  }
 
 
   render() {
@@ -51,7 +72,7 @@ export class App extends React.Component {
         <SearchBar />
         <div className="App-playlist">
           <SearchResults onAdd={this.addTrack} searchResults={this.state.searchResults} />
-          <Playlist playlist={this.state.playlist} />
+          <Playlist onNameChange={this.updatePlaylistName} onRemove={this.removeTrack} playlist={this.state.playlist} />
         </div>
       </div>
     </div>
